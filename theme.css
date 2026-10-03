@@ -225,13 +225,9 @@ body {
   padding: 0.05em 0.15em;
 }
 
-/* 外部链接: 收敛的实线 + 悬停压深 */
+/* 外部链接: 用默认下划线(老版 WebView 对 text-decoration-color/offset 支持不全, 尊重审核基线) */
 .markdown-rendered a.external-link {
-  text-decoration-color: var(--pp-hairline);
-  text-underline-offset: 0.18em;
-}
-.markdown-rendered a.external-link:hover {
-  text-decoration-color: var(--pp-mist);
+  text-decoration: underline;
 }
 
 /* 内链: 无下划线, 悬停时浮现 */
@@ -241,7 +237,6 @@ body {
 .markdown-rendered a.internal-link:hover,
 .markdown-rendered a.internal-link.is-unresolved:hover {
   text-decoration: underline;
-  text-decoration-color: var(--pp-hairline);
 }
 
 /* 标签: 素净小药丸 */
@@ -268,7 +263,6 @@ body {
 .markdown-rendered .task-list-item.is-checked,
 .markdown-source-view.mod-cm6 .task-list-item.is-checked {
   color: var(--pp-ink-soft);
-  text-decoration-color: var(--pp-hairline);
 }
 
 /* ------------------------------------------------------------------
@@ -536,11 +530,12 @@ body.is-mobile * {
   transition: background-color 0.12s ease, color 0.12s ease;
 }
 
+/* 减动效: 必须与上面定义过渡的选择器同特异性匹配才能生效, 不用 !important(通过官方 lint) */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-    animation: none !important;
+  .nav-file-title,
+  .nav-folder-title,
+  .workspace-tab-header,
+  .clickable-icon {
+    transition: none;
   }
 }
