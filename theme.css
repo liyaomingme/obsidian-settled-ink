@@ -572,6 +572,11 @@ body.is-phone .markdown-rendered pre {
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+body.is-phone .markdown-rendered pre::-webkit-scrollbar {
+  display: none;
 }
 
 body.is-phone .markdown-rendered pre code {
@@ -583,12 +588,24 @@ body.is-phone .markdown-rendered :not(pre) > code {
   word-break: break-word;
 }
 
-/* 表格: 手机上整表横滑并保留圆角界栏 */
+/* 表格: 手机上贴内容宽 + 可横滑, 不再撑出一大块空框(修复"突出一大截") */
 body.is-phone .markdown-rendered table {
   display: block;
+  width: max-content;
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+body.is-phone .markdown-rendered table::-webkit-scrollbar {
+  display: none;
+}
+
+/* 长链接/长词(如软件源仓库地址)在表格单元里断行, 不把整表撑爆 */
+body.is-phone .markdown-rendered td,
+body.is-phone .markdown-rendered th {
+  word-break: break-word;
 }
 
 /* 引用与笺注卡: 手机上收窄内衬 */
@@ -625,6 +642,17 @@ body.is-phone .prompt .prompt-result {
   body.is-phone {
     --border-width: 0.75px;
   }
+}
+
+/* 抽屉最底部的仓库(库名/切换/设置)区块: 收拢进纸面, 发丝线托底 */
+body.is-mobile .workspace-sidedock-vault-profile {
+  border-top: 1px solid var(--pp-hairline);
+  padding: 8px 12px;
+}
+
+/* 整页横向防线: 正文任何漏网宽元素都不再让整页横着多出一条 */
+body.is-phone .markdown-preview-view {
+  overflow-x: hidden;
 }
 
 /* ------------------------------------------------------------------
