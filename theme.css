@@ -1,0 +1,546 @@
+/* ===================================================================
+   Plain Page · 素笺 — a calm paper theme for Obsidian
+   -------------------------------------------------------------------
+   - 双模式 / dual mode: 瓷白浅色 (porcelain paper light) + 宿墨深色 (ink dark)
+   - 手机优先适配 / mobile-first: .is-mobile / .is-phone refinements
+   - 只用 Obsidian 官方 CSS 变量与长期稳定的类名, 浅深两模式均验证
+   - Author: Qilinora · https://github.com/liyaomingme
+   - License: MIT
+   =================================================================== */
+
+/* ------------------------------------------------------------------
+   1. Token layer — 素笺调色板
+   素笺 = plain letter paper: warm paper surface, ink text,
+   one restrained mist-blue accent, no visual noise.
+   ------------------------------------------------------------------ */
+
+/* 浅色 · 瓷白纸 */
+body.theme-light {
+  --pp-paper:          #f8f6f1;  /* 主纸面 */
+  --pp-paper-desk:     #f2eee7;  /* 桌面(侧栏) */
+  --pp-paper-deep:     #ece7df;  /* 深一档纸面 */
+  --pp-paper-card:     #fdfcfa;  /* 卡片亮面 */
+  --pp-ink:            #33363b;  /* 正文墨 */
+  --pp-ink-strong:     #1f2124;  /* 重墨(标题/强对比) */
+  --pp-ink-soft:       #6e7178;  /* 淡墨(次级文字) */
+  --pp-ink-faint:      #a3a49e;  /* 极淡墨(占位) */
+  --pp-mist:           #7b93be;  /* 雾蓝(点缀) */
+  --pp-accent:         #3c5aa6;  /* 强调蓝(链接/选中) */
+  --pp-accent-strong:  #2f4b8f;  /* 强调蓝-按压 */
+  --pp-hairline:       #e3ddd2;  /* 发丝分隔线 */
+  --pp-hover-wash:     rgba(42, 44, 49, 0.05);
+  --pp-selection:      rgba(123, 147, 190, 0.18);
+  --pp-shadow:         0 2px 12px rgba(31, 33, 36, 0.07);
+}
+
+/* 深色 · 宿墨 */
+body.theme-dark {
+  --pp-paper:          #1c1e21;  /* 墨底主面 */
+  --pp-paper-desk:     #232629;  /* 墨底侧栏 */
+  --pp-paper-deep:     #15171a;  /* 更深墨面 */
+  --pp-paper-card:     #26292d;  /* 卡片 */
+  --pp-ink:            #d8d5ce;  /* 正文粉白 */
+  --pp-ink-strong:     #eceae4;  /* 重白(标题) */
+  --pp-ink-soft:       #9ea2a9;  /* 次级 */
+  --pp-ink-faint:      #6f7379;  /* 占位 */
+  --pp-mist:           #7b93be;  /* 雾蓝 */
+  --pp-accent:         #7b93be;  /* 强调蓝 */
+  --pp-accent-strong:  #93a9cf;  /* 强调蓝-按压 */
+  --pp-hairline:       rgba(255, 255, 255, 0.09);
+  --pp-hover-wash:     rgba(255, 255, 255, 0.06);
+  --pp-selection:      rgba(123, 147, 190, 0.22);
+  --pp-shadow:         0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ------------------------------------------------------------------
+   2. Map tokens → Obsidian variables
+   ------------------------------------------------------------------ */
+
+body {
+  --background-primary:            var(--pp-paper);
+  --background-primary-alt:        var(--pp-paper-deep);
+  --background-secondary:          var(--pp-paper-desk);
+  --background-secondary-alt:      var(--pp-paper-deep);
+  --background-modifier-border:    var(--pp-hairline);
+  --background-modifier-border-hover: var(--pp-hover-wash);
+  --background-modifier-border-focus: var(--pp-mist);
+  --background-modifier-hover:     var(--pp-hover-wash);
+  --background-modifier-active-hover: var(--pp-selection);
+
+  --text-normal:                   var(--pp-ink);
+  --text-muted:                    var(--pp-ink-soft);
+  --text-faint:                    var(--pp-ink-faint);
+  --text-accent:                   var(--pp-accent);
+  --text-accent-hover:             var(--pp-accent-strong);
+  --text-on-accent:                var(--pp-paper);
+  --text-selection:                var(--pp-selection);
+
+  --interactive-normal:            var(--pp-paper-card);
+  --interactive-hover:             var(--pp-hover-wash);
+  --interactive-accent:            var(--pp-accent);
+  --interactive-accent-hover:      var(--pp-accent-strong);
+
+  --divider-color:                 var(--pp-hairline);
+  --tab-outline-color:             var(--pp-hairline);
+  --titlebar-background:           var(--pp-paper-desk);
+  --titlebar-background-focused:   var(--pp-paper-desk);
+
+  --code-background:               var(--pp-paper-deep);
+  --code-normal:                   var(--pp-ink);
+  --code-comment:                  var(--pp-ink-soft);
+
+  --hr-color:                      var(--pp-hairline);
+  --bold-color:                    var(--pp-ink-strong);
+  --italic-color:                  var(--pp-ink);
+  --link-color:                    var(--pp-accent);
+  --link-color-hover:              var(--pp-accent-strong);
+  --link-external-color:           var(--pp-accent);
+  --link-external-color-hover:     var(--pp-accent-strong);
+  --link-unresolved-color:         var(--pp-ink-faint);
+
+  --tag-color:                     var(--pp-accent);
+  --tag-color-hover:               var(--pp-accent-strong);
+  --tag-background:                var(--pp-selection);
+  --tag-background-hover:          var(--pp-hover-wash);
+  --tag-border-color:              transparent;
+  --tag-border-color-hover:        transparent;
+
+  --checkbox-color:                var(--pp-accent);
+  --checkbox-color-hover:          var(--pp-accent-strong);
+  --checkbox-border-color:         var(--pp-hairline);
+  --checkbox-border-color-hover:   var(--pp-mist);
+
+  --nav-item-color:                var(--pp-ink);
+  --nav-item-color-hover:          var(--pp-ink-strong);
+  --nav-item-color-active:         var(--pp-accent);
+  --nav-item-background-hover:     var(--pp-hover-wash);
+  --nav-item-background-active:    var(--pp-selection);
+
+  --modal-background:              var(--pp-paper);
+  --prompt-background:             var(--pp-paper);
+  --menu-background:               var(--pp-paper-card);
+  --menu-border-color:             var(--pp-hairline);
+  --shadow-s:                      var(--pp-shadow);
+  --shadow-m:                      var(--pp-shadow);
+  --shadow-l:                      var(--pp-shadow);
+
+  --radius-s: 5px;
+  --radius-m: 9px;
+  --radius-l: 12px;
+
+  /* 素笺的纸感: 阅读正文用衬线(宋体系), UI 界面保持系统无衬线 */
+  --font-text-override: "Songti SC", "STSong", "Noto Serif SC",
+    "Source Han Serif SC", "SimSun", Georgia, serif;
+}
+
+/* ------------------------------------------------------------------
+   3. Base typography — 纸面呼吸感
+   ------------------------------------------------------------------ */
+
+body {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 行距: 阅读与编辑一致放宽, 手机长文更透气 */
+.markdown-preview-view,
+.markdown-reading-view,
+.markdown-source-view {
+  line-height: 1.78;
+}
+
+.markdown-source-view.mod-cm6 .cm-line {
+  line-height: 1.78;
+}
+
+/* 段落间距: 纸面留白 */
+.markdown-rendered p {
+  margin-block: 0.75em;
+}
+
+/* 笺头(笔记标题)用衬线, 重墨 */
+.inline-title {
+  font-family: var(--font-text-override);
+  font-weight: 700;
+  color: var(--pp-ink-strong);
+  letter-spacing: 0.01em;
+}
+
+/* 各级标题: 衬线 + 重墨 */
+.markdown-rendered h1,
+.markdown-rendered h2,
+.markdown-rendered h3,
+.markdown-rendered h4,
+.markdown-rendered h5,
+.markdown-rendered h6,
+.markdown-source-view.mod-cm6 .HyperMD-header {
+  font-family: var(--font-text-override);
+  color: var(--pp-ink-strong);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* 一级标题下的一根短蓝线: 全篇唯一的强调装饰, 取"落款"意 */
+.markdown-rendered h1::after {
+  content: "";
+  display: block;
+  width: 2.5em;
+  height: 2px;
+  margin-top: 0.45em;
+  border-radius: 1px;
+  background: var(--pp-mist);
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------------
+   4. Inline elements
+   ------------------------------------------------------------------ */
+
+.markdown-rendered strong,
+.markdown-source-view.mod-cm6 .cm-strong {
+  font-weight: 700;
+}
+
+.markdown-rendered em,
+.markdown-source-view.mod-cm6 .cm-em {
+  color: var(--pp-ink);
+}
+
+/* 行内代码: 纸面小卡 */
+.markdown-rendered :not(pre) > code,
+.markdown-source-view.mod-cm6 .cm-inline-code {
+  background: var(--pp-paper-deep);
+  border: 1px solid var(--pp-hairline);
+  border-radius: var(--radius-s);
+  padding: 0.08em 0.35em;
+  font-size: 0.88em;
+}
+
+/* 高亮: 雾蓝水痕 */
+.markdown-rendered mark,
+.markdown-rendered .cm-highlight {
+  background: var(--pp-selection);
+  color: var(--pp-ink-strong);
+  border-radius: 3px;
+  padding: 0.05em 0.15em;
+}
+
+/* 外部链接: 收敛的实线 + 悬停压深 */
+.markdown-rendered a.external-link {
+  text-decoration-color: var(--pp-hairline);
+  text-underline-offset: 0.18em;
+}
+.markdown-rendered a.external-link:hover {
+  text-decoration-color: var(--pp-mist);
+}
+
+/* 内链: 无下划线, 悬停时浮现 */
+.markdown-rendered a.internal-link {
+  text-decoration: none;
+}
+.markdown-rendered a.internal-link:hover,
+.markdown-rendered a.internal-link.is-unresolved:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--pp-hairline);
+}
+
+/* 标签: 素净小药丸 */
+.markdown-rendered .tag,
+.markdown-source-view.mod-cm6 .cm-hashtag {
+  border-radius: 99px;
+  padding: 0.1em 0.55em;
+  font-size: 0.82em;
+  background: var(--pp-selection);
+  color: var(--pp-accent);
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------------
+   5. Checkbox — 圆角小格
+   ------------------------------------------------------------------ */
+
+.markdown-rendered input[type="checkbox"],
+.markdown-source-view.mod-cm6 input[type="checkbox"] {
+  border-radius: 4px;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.markdown-rendered .task-list-item.is-checked,
+.markdown-source-view.mod-cm6 .task-list-item.is-checked {
+  color: var(--pp-ink-soft);
+  text-decoration-color: var(--pp-hairline);
+}
+
+/* ------------------------------------------------------------------
+   6. Blockquote & Callouts — 笺注
+   ------------------------------------------------------------------ */
+
+.markdown-rendered blockquote,
+.markdown-source-view.mod-cm6 .HyperMD-quote {
+  border-left: 2px solid var(--pp-mist);
+  background: var(--pp-selection);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  padding: 0.4em 1em;
+  color: var(--pp-ink-soft);
+  font-style: normal;
+}
+
+.markdown-rendered .callout {
+  border-radius: var(--radius-m);
+  border: 1px solid var(--pp-hairline);
+  background-color: var(--pp-paper-card);
+  box-shadow: none;
+  padding: 0.7em 1em;
+}
+
+.markdown-rendered .callout-title {
+  font-weight: 600;
+  color: var(--pp-ink-strong);
+}
+
+.markdown-rendered .callout-content {
+  color: var(--pp-ink);
+}
+
+/* ------------------------------------------------------------------
+   7. Code blocks — 墨栏
+   ------------------------------------------------------------------ */
+
+.markdown-rendered pre,
+.markdown-source-view.mod-cm6 .cm-editor .HyperMD-codeblock {
+  background: var(--pp-paper-deep);
+}
+
+.markdown-rendered pre {
+  border: 1px solid var(--pp-hairline);
+  border-radius: var(--radius-m);
+  padding: 0.9em 1.1em;
+}
+
+.markdown-rendered pre code {
+  font-size: 0.88em;
+  color: var(--pp-ink);
+}
+
+/* ------------------------------------------------------------------
+   8. Tables — 界栏
+   ------------------------------------------------------------------ */
+
+.markdown-rendered table {
+  border-collapse: collapse;
+  border: 1px solid var(--pp-hairline);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.markdown-rendered th {
+  background: var(--pp-paper-desk);
+  font-weight: 600;
+  color: var(--pp-ink-strong);
+}
+
+.markdown-rendered th,
+.markdown-rendered td {
+  border: none;
+  border-bottom: 1px solid var(--pp-hairline);
+  padding: 0.45em 0.9em;
+}
+
+.markdown-rendered tr:last-child td {
+  border-bottom: none;
+}
+
+/* ------------------------------------------------------------------
+   9. Horizontal rule — 折笺线(虚线, 像纸上折痕)
+   ------------------------------------------------------------------ */
+
+.markdown-rendered hr,
+.markdown-source-view.mod-cm6 .cm-hr {
+  border: none;
+  border-top: 1px dashed var(--pp-hairline);
+  margin: 1.6em 0;
+}
+
+/* ------------------------------------------------------------------
+   10. Navigation / sidebar — 桌面
+   ------------------------------------------------------------------ */
+
+.nav-files-container .nav-file-title,
+.nav-files-container .nav-folder-title {
+  border-radius: var(--radius-s);
+  transition: background-color 0.1s ease;
+}
+
+.nav-files-container .nav-file-title.is-active,
+.nav-files-container .nav-folder-title.is-active {
+  box-shadow: inset 2px 0 0 var(--pp-mist);
+  background: var(--pp-selection);
+  color: var(--pp-accent);
+}
+
+.workspace-leaf.mod-left-split .workspace-leaf-content,
+.workspace-leaf.mod-right-split .workspace-leaf-content {
+  background: var(--pp-paper-desk);
+}
+
+/* 标签页: 低调, 活动页纸面同色 */
+.workspace-tab-header {
+  color: var(--pp-ink-soft);
+}
+.workspace-tab-header.is-active {
+  color: var(--pp-ink-strong);
+}
+.workspace-tab-container-inner {
+  gap: 4px;
+}
+
+/* ------------------------------------------------------------------
+   11. Chrome — 滚动条/菜单/提示, 一律安静
+   ------------------------------------------------------------------ */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--pp-hover-wash);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pp-ink-faint);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.menu,
+.prompt,
+.suggestion-container,
+.modal {
+  border: 1px solid var(--pp-hairline);
+  box-shadow: var(--pp-shadow);
+}
+
+.status-bar {
+  border-top: 1px solid var(--pp-hairline);
+  font-size: 12px;
+}
+
+/* 空状态文字(无文件时)更淡 */
+.workspace-empty-view,
+.workspace-leaf-content .view-header-title {
+  color: var(--pp-ink-soft);
+}
+
+/* ------------------------------------------------------------------
+   12. Mobile — 手机优先适配
+   目标: 触控目标充足、无悬停依赖、纸面色一致、不发飘。
+   ------------------------------------------------------------------ */
+
+/* 顶栏: 纸面同色 + 发丝底边 */
+body.is-mobile .mobile-navbar {
+  background: var(--pp-paper-desk);
+  border-bottom: 1px solid var(--pp-hairline);
+}
+
+body.is-mobile .mobile-navbar .clickable-icon,
+body.is-mobile .mobile-navbar button {
+  padding: 8px 10px;
+  border-radius: var(--radius-s);
+}
+
+/* 笔记标题在手机顶栏加衬线重墨 */
+body.is-mobile .mobile-navbar .view-header-title,
+body.is-mobile .view-header-title {
+  font-weight: 600;
+}
+
+/* 输入工具栏(键盘上方) */
+body.is-mobile .mobile-toolbar {
+  background: var(--pp-paper-desk);
+  border-top: 1px solid var(--pp-hairline);
+}
+
+body.is-mobile .mobile-toolbar .mobile-toolbar-button {
+  padding: 8px 10px;
+  border-radius: var(--radius-s);
+}
+
+body.is-mobile .mobile-toolbar .mobile-toolbar-button:active {
+  background: var(--pp-selection);
+}
+
+/* 抽屉侧栏: 纸面 + 触控行高 */
+body.is-mobile .workspace-drawer,
+body.is-mobile .workspace-drawer-inner,
+body.is-mobile .workspace-drawer-tab-option-container,
+body.is-mobile .mod-left-split .workspace-leaf-content {
+  background: var(--pp-paper-desk);
+}
+
+body.is-mobile .nav-file-title,
+body.is-mobile .nav-folder-title {
+  padding: 6px 8px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+/* 手机上悬停态不可靠, 用按压态替代 */
+body.is-mobile .nav-file-title:active,
+body.is-mobile .nav-folder-title:active {
+  background: var(--pp-selection);
+}
+
+body.is-mobile .clickable-icon {
+  padding: 8px;
+}
+
+/* 手机正文两侧留白稍收紧, 阅读宽度友好 */
+body.is-phone .markdown-preview-view,
+body.is-phone .markdown-source-view {
+  padding-inline: 14px;
+}
+
+/* 手机上减弱重投影(低性能设备不发灰) */
+body.is-mobile .callout,
+body.is-mobile .menu,
+body.is-mobile .modal {
+  box-shadow: none;
+}
+
+/* 浮动按钮(移动端快速操作) */
+body.is-mobile .floating-button,
+body.is-mobile .floating-mobile-buttons button {
+  background: var(--pp-accent);
+  color: var(--pp-paper);
+}
+
+/* 触控设备一律不用悬停动画 */
+body.is-mobile * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ------------------------------------------------------------------
+   13. Motion — 安静过渡, 尊重系统减动效
+   ------------------------------------------------------------------ */
+
+.nav-file-title,
+.nav-folder-title,
+.workspace-tab-header,
+.clickable-icon {
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
