@@ -1,39 +1,83 @@
-# Settled Ink · 宿墨
+# Settled Ink
 
-**A calm paper theme for Obsidian — porcelain white in light, settled ink in dark. Mobile friendly.**
-**宿墨是一方安静的墨:浅色如瓷白纸面,白纸黑字;深色如宿墨夜读,墨底粉白。手机端优先打磨。**
+**A calm paper theme for Obsidian — warm porcelain paper in light mode, settled ink in dark. Built mobile-first.**
 
-![Settled Ink light](screenshot.png)
+![Settled Ink — light mode](screenshot.png)
 
-## 特性 / Features
+Settled Ink is built around a single idea: reading and writing in Obsidian should feel like a quiet sheet of paper. The light mode is a warm porcelain-white surface with graphite ink text; the dark mode is a deep settled-ink surface with soft paper-white text. One restrained mist-blue accent is the only color allowed to speak.
 
-- 🀄 **双模式 / Dual mode** — 瓷白浅色(porcelain paper)+ 宿墨深色(settled ink),两套完整调色板
-- 📱 **手机优先 / Mobile first** — 触控目标加高、按压态替代悬停态、顶栏与工具栏纸面色一致、移动端去重投影
-- 🖋 **纸感排版 / Paper typography** — 正文用宋体系衬线(回退 Georgia),行距 1.78,手机长文更透气
-- 🎨 **令牌化 / Tokenized** — 全部颜色经由 `--pp-*` 令牌层映射到官方 CSS 变量,浅深模式各一处定义,改色一处生效
-- 🖌 **落款蓝线 / Signature line** — 一级标题下的一根雾蓝短线,全篇唯一的强调装饰
+![Settled Ink — dark mode](screenshot-dark.png)
 
-## 安装 / Install
+## Features
 
-在 Obsidian 中:**设置 → 外观 → 主题 → 管理 → 社区主题**,搜索 "Settled Ink" 安装;
-或从本仓库下载 `theme.css` 与 `manifest.json`,放入库的 `.obsidian/themes/Settled Ink/` 文件夹。
+- **Dual color modes** — two hand-tuned palettes: *porcelain paper* for light and *settled ink* for dark. Both are complete, independently adjusted, and switch instantly with Obsidian's base theme toggle.
+- **Mobile-first details** — the top navbar, keyboard toolbar and side drawer all match the paper palette on phones and tablets; touch targets are enlarged; pressed states replace hover states; heavy shadows are lifted on mobile for older devices.
+- **Paper typography** — reading text uses a serif stack (Songti SC / STSong / Noto Serif SC, falling back to Georgia) with a relaxed 1.78 line-height and generous paragraph spacing. Interface chrome stays in the system sans font, so the UI remains crisp while the page reads like print.
+- **The signature line** — the theme's only ornament: a short mist-blue rule under every H1, like the signature stroke at the end of a letter.
+- **Tokenized colors** — every color flows through a small `--pp-*` token layer mapped onto official Obsidian CSS variables. Light and dark each define the token set exactly once, so a single edit restyles the entire theme.
+- **Quiet details** — dashed fold-line horizontal rules, pill-shaped tags, rounded checkboxes, bordered code blocks, hairline dividers, tinted blockquotes and soft callout cards.
 
-In Obsidian: open **Settings → Appearance → Themes → Manage → Community themes**, search for "Settled Ink", and install. You can also grab `theme.css` and `manifest.json` from this repository into `.obsidian/themes/Settled Ink/` of your vault.
+| Light · Porcelain mode | Dark · Settled Ink mode |
+|---|---|
+| ![Light on phone](phone-light.png) | ![Dark on phone](phone-dark.png) |
 
-## 手机端 / Mobile
+## Palette
 
-主题同样适用于 iOS / Android 版 Obsidian:移动端导航栏、键盘工具栏、抽屉侧栏均已适配,建议手机上同时试浅色与深色两种外观。
-
-Works on Obsidian for iOS and Android: mobile navbar, keyboard toolbar and side drawer are all styled. Try both light and dark modes on your phone.
-
-## 设计基调 / Design notes
-
-| 模式 | 底色 | 正文 | 强调 |
+| Mode | Surface | Text | Accent |
 |---|---|---|---|
-| Light · 瓷白 | `#F8F6F1` | `#33363B` | 雾蓝 `#3C5AA6` |
-| Dark · 宿墨 | `#1C1E21` | `#D8D5CE` | 雾蓝 `#7B93BE` |
+| Light · Porcelain | `#F8F6F1` | `#33363B` | Mist blue `#3C5AA6` |
+| Dark · Settled Ink | `#1C1E21` | `#D8D5CE` | Mist blue `#7B93BE` |
 
-界面字体保持系统默认,阅读字体用衬线;如果你偏好无衬线正文,在 外观 设置中单独覆盖字体即可。
+The full token list for both modes lives at the top of [`theme.css`](theme.css), under the `--pp-*` layer.
+
+## Installation
+
+### From the community directory (recommended)
+
+1. Open **Settings → Appearance → Themes → Manage → Community themes**.
+2. Search for **"Settled Ink"**, click **Install**, then **Use**.
+
+Updates arrive automatically through the community theme manager.
+
+### Manual install
+
+1. Download `theme.css` and `manifest.json` from the [latest release](https://github.com/liyaomingme/obsidian-settled-ink/releases/latest).
+2. Create a folder `Settled Ink` inside your vault's `.obsidian/themes/` directory and put both files there.
+3. Restart Obsidian, then enable the theme in **Settings → Appearance → Theme**.
+
+## On mobile
+
+The theme is verified on Obsidian for iOS and Android. The mobile navbar, keyboard toolbar and side drawer are all styled to the same paper palette in both light and dark modes — install it from the community theme browser on your phone the same way as on desktop.
+
+## Compatibility
+
+- Requires **Obsidian 1.4.0 or later** (minAppVersion in `manifest.json`).
+- Only long-stable CSS variables and class names are used, keeping the theme honest across recent Obsidian versions.
+- Works with the built-in editor, reading mode, callouts, math, tables, code blocks and graph view.
+
+## Customization
+
+Prefer a different accent color? Override the token layer with a small CSS snippet (Settings → Appearance → CSS snippets):
+
+```css
+/* warm amber accent, for example */
+body.theme-light {
+  --pp-accent: #8a5a2b;
+  --pp-accent-strong: #6f4920;
+}
+body.theme-dark {
+  --pp-accent: #cfa465;
+  --pp-accent-strong: #e0b878;
+}
+```
+
+If you prefer sans-serif reading text, remove the serif stack via `Appearance → Font` overrides, or set a snippet with:
+
+```css
+body {
+  --font-text-override: -apple-system, "Segoe UI", "PingFang SC", sans-serif;
+}
+```
 
 ## License
 
