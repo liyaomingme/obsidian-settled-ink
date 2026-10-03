@@ -1,7 +1,7 @@
 /* ===================================================================
-   Plain Page · 素笺 — a calm paper theme for Obsidian
+   Settled Ink · 宿墨 — a calm paper theme for Obsidian
    -------------------------------------------------------------------
-   - 双模式 / dual mode: 瓷白浅色 (porcelain paper light) + 宿墨深色 (ink dark)
+   - 双模式 / dual mode: 瓷白浅色 (porcelain paper light) + 宿墨深色 (settled-ink dark)
    - 手机优先适配 / mobile-first: .is-mobile / .is-phone refinements
    - 只用 Obsidian 官方 CSS 变量与长期稳定的类名, 浅深两模式均验证
    - Author: Qilinora · https://github.com/liyaomingme
@@ -9,9 +9,9 @@
    =================================================================== */
 
 /* ------------------------------------------------------------------
-   1. Token layer — 素笺调色板
-   素笺 = plain letter paper: warm paper surface, ink text,
-   one restrained mist-blue accent, no visual noise.
+   1. Token layer — 宿墨调色板
+   宿墨 = ink left to settle overnight: warm paper surface in light,
+   ink surface in dark. One restrained mist-blue accent, no visual noise.
    ------------------------------------------------------------------ */
 
 /* 浅色 · 瓷白纸 */
@@ -128,7 +128,7 @@ body {
   --radius-m: 9px;
   --radius-l: 12px;
 
-  /* 素笺的纸感: 阅读正文用衬线(宋体系), UI 界面保持系统无衬线 */
+  /* 宿墨的纸感: 阅读正文用衬线(宋体系), UI 界面保持系统无衬线 */
   --font-text-override: "Songti SC", "STSong", "Noto Serif SC",
     "Source Han Serif SC", "SimSun", Georgia, serif;
 }
