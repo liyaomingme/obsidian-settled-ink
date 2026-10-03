@@ -11,7 +11,7 @@ Settled Ink is built around a single idea: reading and writing in Obsidian shoul
 ## Features
 
 - **Dual color modes** — two hand-tuned palettes: *porcelain paper* for light and *settled ink* for dark. Both are complete, independently adjusted, and switch instantly with Obsidian's base theme toggle.
-- **Mobile-first details** — the top navbar, keyboard toolbar and side drawer all match the paper palette on phones and tablets; touch targets are enlarged; pressed states replace hover states; heavy shadows are lifted on mobile for older devices.
+- **Mobile-first details** — the top navbar, keyboard toolbar and side drawer all match the paper palette on phones and tablets; touch targets are enlarged (44 px rows); pressed states replace hover states; long code blocks and wide tables scroll horizontally instead of breaking the page; inline titles, callouts and list spacing are proportioned for a phone column.
 - **Paper typography** — reading text uses a serif stack (Songti SC / STSong / Noto Serif SC, falling back to Georgia) with a relaxed 1.78 line-height and generous paragraph spacing. Interface chrome stays in the system sans font, so the UI remains crisp while the page reads like print.
 - **The signature line** — the theme's only ornament: a short mist-blue rule under every H1, like the signature stroke at the end of a letter.
 - **Tokenized colors** — every color flows through a small `--pp-*` token layer mapped onto official Obsidian CSS variables. Light and dark each define the token set exactly once, so a single edit restyles the entire theme.

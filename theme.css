@@ -432,10 +432,10 @@ body {
 
 /* ------------------------------------------------------------------
    12. Mobile — 手机优先适配
-   目标: 触控目标充足、无悬停依赖、纸面色一致、不发飘。
+   目标: 触控目标充足、无悬停依赖、纸面色一致、长内容不横向失守。
    ------------------------------------------------------------------ */
 
-/* 顶栏: 纸面同色 + 发丝底边 */
+/* 顶栏: 纸面同色 + 发丝底边; 标题不溢出 */
 body.is-mobile .mobile-navbar {
   background: var(--pp-paper-desk);
   border-bottom: 1px solid var(--pp-hairline);
@@ -447,10 +447,20 @@ body.is-mobile .mobile-navbar button {
   border-radius: var(--radius-s);
 }
 
-/* 笔记标题在手机顶栏加衬线重墨 */
-body.is-mobile .mobile-navbar .view-header-title,
-body.is-mobile .view-header-title {
+/* 顶栏标题: 单行省略, 重墨 */
+body.is-mobile .mobile-navbar .view-header-title {
   font-weight: 600;
+  color: var(--pp-ink-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* 笔记标题(笺头)在手机收紧上边距, 首屏多见一行正文 */
+body.is-mobile .inline-title {
+  margin-top: 4px;
+  font-size: 1.35em;
 }
 
 /* 输入工具栏(键盘上方) */
@@ -468,7 +478,7 @@ body.is-mobile .mobile-toolbar .mobile-toolbar-button:active {
   background: var(--pp-selection);
 }
 
-/* 抽屉侧栏: 纸面 + 触控行高 */
+/* 抽屉侧栏: 纸面 + 触控行高(44px 一整行, 手指不误触) */
 body.is-mobile .workspace-drawer,
 body.is-mobile .workspace-drawer-inner,
 body.is-mobile .workspace-drawer-tab-option-container,
@@ -479,7 +489,7 @@ body.is-mobile .mod-left-split .workspace-leaf-content {
 body.is-mobile .nav-file-title,
 body.is-mobile .nav-folder-title {
   padding: 6px 8px;
-  min-height: 40px;
+  min-height: 44px;
   display: flex;
   align-items: center;
 }
@@ -497,7 +507,7 @@ body.is-mobile .clickable-icon {
 /* 手机正文两侧留白稍收紧, 阅读宽度友好 */
 body.is-phone .markdown-preview-view,
 body.is-phone .markdown-source-view {
-  padding-inline: 14px;
+  padding-inline: 12px;
 }
 
 /* 手机上减弱重投影(低性能设备不发灰) */
@@ -512,11 +522,109 @@ body.is-mobile .floating-button,
 body.is-mobile .floating-mobile-buttons button {
   background: var(--pp-accent);
   color: var(--pp-paper);
+  min-width: 44px;
+  min-height: 44px;
 }
 
 /* 触控设备一律不用悬停动画 */
 body.is-mobile * {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ↓↓↓ 1.0.2 手机版式深化 ↓↓↓ */
+
+/* 列表: 标记缩小, 沉重感降低(参照 Minimal 实战模式) */
+body.is-mobile ul > li:not(.task-list-item)::marker {
+  font-size: 0.8em;
+}
+
+body.is-phone .markdown-rendered p {
+  margin-block: 0.65em;
+}
+
+body.is-phone .markdown-rendered ul,
+body.is-phone .markdown-rendered ol {
+  margin-block: 0.5em;
+  padding-inline-start: 1.3em;
+}
+
+body.is-phone .markdown-rendered hr,
+body.is-phone .markdown-source-view.mod-cm6 .cm-hr {
+  margin-block: 1.2em;
+}
+
+/* 一/二/三级标题手机上收半档, 版面不那么顶天 */
+body.is-phone .markdown-rendered h1 {
+  font-size: 1.7em;
+}
+
+body.is-phone .markdown-rendered h2 {
+  font-size: 1.45em;
+}
+
+body.is-phone .markdown-rendered h3 {
+  font-size: 1.2em;
+}
+
+/* 代码块: 手机上允许横滑, 不撑破版心 */
+body.is-phone .markdown-rendered pre {
+  padding: 0.7em 0.9em;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.is-phone .markdown-rendered pre code {
+  font-size: 0.85em;
+  white-space: pre;
+}
+
+body.is-phone .markdown-rendered :not(pre) > code {
+  word-break: break-word;
+}
+
+/* 表格: 手机上整表横滑并保留圆角界栏 */
+body.is-phone .markdown-rendered table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 引用与笺注卡: 手机上收窄内衬 */
+body.is-phone .markdown-rendered blockquote {
+  padding: 0.3em 0.8em;
+}
+
+body.is-phone .markdown-rendered .callout {
+  padding: 0.55em 0.8em;
+}
+
+body.is-phone .markdown-rendered .callout-title {
+  font-size: 0.92em;
+}
+
+/* 嵌入笔记: 手机上收窄左衬 */
+body.is-phone .markdown-embed {
+  padding-inline-start: 0.6em;
+}
+
+/* 属性面板(元数据): 手机上降低密度 */
+body.is-phone {
+  --metadata-label-font-size: 12px;
+  --metadata-input-font-size: 13px;
+}
+
+/* 快速切换/搜索弹窗: 行高保证可点 */
+body.is-phone .prompt .prompt-result {
+  min-height: 44px;
+}
+
+/* 高分屏手机: 发丝线用 0.75px, 视觉更细挺(参照 Minimal 实战模式) */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  body.is-phone {
+    --border-width: 0.75px;
+  }
 }
 
 /* ------------------------------------------------------------------
